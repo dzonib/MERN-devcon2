@@ -7,10 +7,10 @@ const config = require("config");
 
 const User = require("../../models/User");
 
-// @route  GET api/users
-// @desc   Test route
+// @route  POST api/users
+// @desc   Register user
 // @access Public
-router.get(
+router.post(
   "/",
   check("name", "Name is required")
     .not()
@@ -35,7 +35,7 @@ router.get(
       if (user) {
         res.status(400).json({ errors: [{ msg: "User already exists" }] });
       }
-      // Upload profile image later
+      // TODO: Upload profile image later
 
       user = new User({
         name,
@@ -46,9 +46,6 @@ router.get(
       const salt = await bcypt.genSalt(10);
 
       user.password = await bcypt.hash(password, salt);
-
-      // Encrypt the password
-      // Return jsonwebtoken
 
       await user.save();
 
@@ -61,7 +58,7 @@ router.get(
       jwt.sign(
         payload,
         config.get("jwtSecret"),
-        { expiresIn: 360000 },
+        { expiresIn: 360000000 },
         (err, token) => {
           if (err) throw err;
 
