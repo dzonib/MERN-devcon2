@@ -1,4 +1,7 @@
 {
   "mongoURI": "mongodb+srv://dzonib381:123@devconnector-2hohv.mongodb.net/test?retryWrites=true&w=majority",
-  "jwtSecret": "secrettoken"
+  "jwtSecret": "secrettoken",
+
+  "githubClientId": "f5e2b8e4a426ad3f97ae",
+  "githubSecret": "27c35490a4bf172b02e70f9dac14b638a1ad8de5"
 }
