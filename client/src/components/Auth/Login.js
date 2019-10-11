@@ -1,6 +1,9 @@
 import React, { Fragment, useState } from "react";
 import { Link, Redirect } from "react-router-dom";
-// import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
+
+import { login } from "../../redux/actions/auth";
 
 const Login = ({ login, isAuthenticated }) => {
   const [formData, setFormData] = useState({
@@ -19,15 +22,18 @@ const Login = ({ login, isAuthenticated }) => {
   };
 
   if (isAuthenticated) {
+    console.log("redirect");
     return <Redirect to="/dashboard" />;
   }
 
   return (
     <Fragment>
-      <h1 className="large text-primary">Sign In</h1>
+      <h1 className="large text-primary"> Sign In </h1>
+
       <p className="lead">
         <i className="fas fa-user" /> Sign Into Your Account
       </p>
+
       <form className="form" onSubmit={e => onSubmit(e)}>
         <div className="form-group">
           <input
@@ -58,18 +64,16 @@ const Login = ({ login, isAuthenticated }) => {
   );
 };
 
-export default Login;
+Login.propTypes = {
+  login: PropTypes.func.isRequired,
+  isAuthenticated: PropTypes.bool
+};
 
-// Login.propTypes = {
-//   login: PropTypes.func.isRequired,
-//   isAuthenticated: PropTypes.bool
-// };
+const mapStateToProps = state => ({
+  isAuthenticated: state.auth.isAuthenticated
+});
 
-// const mapStateToProps = state => ({
-//   isAuthenticated: state.auth.isAuthenticated
-// });
-
-// export default connect(
-//   mapStateToProps,
-//   { login }
-// )(Login);
+export default connect(
+  mapStateToProps,
+  { login }
+)(Login);
